@@ -29,4 +29,25 @@ router.get('/:code', async (req, res, next) => {
     }
 });
 
+router.post('/', async (req, res, next) => {
+    try {
+        const company = req.body;
+        const companyAdded = await db.query('INSERT INTO companies (code, name, description) VALUES ($1, $2, $3) RETURNING code, name, description', [company.code, company.name, company.description])
+        return res.json({"company": companyAdded.rows[0]})
+    } catch (e) {
+        return next(e)
+    }
+});
+
+router.put('/:code', async (req, res, next) => {
+    try {
+        const code = req.params.code;
+        const { name, description } = req.body;
+        const company = await db.query(`UPDATE companies WHERE name=$2, description=$3 WHERE code=$1 RETURNING code, name, description`,[code, name, description]);
+        return res.json({"company": company.rows[0]})
+    } catch (e) {
+        return next(e);
+    }
+});
+
 module.exports = router; 
