@@ -50,4 +50,13 @@ router.put('/:code', async (req, res, next) => {
     }
 });
 
+router.delete('/:code', async (req, res, next) => {
+    try {
+        const code = req.params.code;
+        const company = await db.query(`DELETE FROM companies WHERE code=$1`,[code]);
+        return res.json({msg: 'deleted'})
+    } catch (e) {
+        return next(e);
+    }
+});
 module.exports = router; 
