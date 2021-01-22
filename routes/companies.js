@@ -6,22 +6,27 @@ const ExpressError = require("../expressError")
 
 router.get('/', async (req, res, next) => {
     try {
-        const results = await db.query(`SELECT * FROM companies`);
-        return res.json({companies: results.rows})
+        const resp = await db.query(`SELECT name, code 
+        FROM companies
+        ORDER BY name`);
+        return res.json({"companies": resp.rows})
     } catch (e) {
-        next(e);
+        return next(e)
     }
 });
 
 router.get('/:code', async (req, res, next) => {
     try {
         const { code } = req.params;
-        const results = await db.query(`SELECT * FROM companies WHERE id=$1`,[code]);
-        const data = results.rows[0];
-        return res.json({company: {code: data.code, name: data.name, description: data.description}})
+        const resp = await db.query(`SELECT code, name, description FROM companies WHERE code=$1`,[code]);
+        const company = resp.rows[0];
+        if (!company) {
+            throw new ExpressError(`Company ${code} not found`, 404)
+        }
+        return res.json({"company": company})
     } catch (e) {
-        next(e);
+        return next(e);
     }
 });
 
-module.exports = router;
+module.exports = router; 

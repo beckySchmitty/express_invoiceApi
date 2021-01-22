@@ -3,7 +3,8 @@
 const express = require("express");
 const app = express();
 const ExpressError = require("./expressError")
-const db = require("./db")
+const db = require("./db");
+
 
 
 app.use(express.json());
@@ -23,7 +24,7 @@ app.use((err, req, res, next) => {
 
   return res.json({
     error: err,
-    message: err.message
+    // message: err.message
   });
 });
 
