@@ -15,6 +15,9 @@ app.use("/companies", cRoutes);
 const iRoutes = require("./routes/invoices");
 app.use("/invoices", iRoutes);
 
+const uRoutes = require('./routes/users');
+app.use('/users', uRoutes);
+
 // 404 handler
 app.use(function(req, res, next) {
   const err = new ExpressError("Not Found", 404);
