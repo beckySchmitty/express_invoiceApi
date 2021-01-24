@@ -25,19 +25,19 @@ router.get("/:id", async function (req, res, next) {
       const resp = await db.query(
         `SELECT m.id, m.msg, t.tag
         FROM messages AS m
-        JOIN messages_tags AS mt 
+        LEFT JOIN messages_tags AS mt 
         ON m.id = mt.message_id
         JOIN tags AS t 
         ON mt.tag_code = t.code
-        WHERE m.id = $1;`, [req.params.id]);
+        WHERE m.id = $1`, [req.params.id]);
   
         let { id, msg } = resp.rows[0];
         let tags = resp.rows.map(r => r.tag);
-    
+        // return res.send(req.params.id)
         return res.json({id, msg, tags});  
     }
-    catch (err) {
-      return next(err);
+    catch (e) {
+      return next(e);
     }
   });
 
