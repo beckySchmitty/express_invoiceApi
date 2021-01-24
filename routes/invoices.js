@@ -32,4 +32,15 @@ router.get('/:id', async (req, res, next) => {
     }
 });
 
+
+router.delete('/:code', async (req, res, next) => {
+    try {
+        const code = req.params.code;
+        const company = await db.query(`DELETE FROM ivoices WHERE code=$1`,[code]);
+        return res.json({msg: 'deleted'})
+    } catch (e) {
+        return next(e);
+    }
+});
+
 module.exports = router; 
