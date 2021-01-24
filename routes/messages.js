@@ -19,6 +19,7 @@ router.get("/", async function (req, res, next) {
     }
 });
   
+// Get message: {id, msg tags: [name, name]}
 router.get("/:id", async function (req, res, next) {
     try {
       const resp = await db.query(
