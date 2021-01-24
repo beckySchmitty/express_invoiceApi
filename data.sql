@@ -32,7 +32,7 @@ INSERT INTO invoices (comp_Code, amt, paid, paid_date)
 
 
 
--- so I can add user routes for more notes
+-- additional tables added for users and messages practice
 DROP TABLE IF EXISTS users
 CASCADE;
 DROP TABLE IF EXISTS messages

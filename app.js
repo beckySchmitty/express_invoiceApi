@@ -16,7 +16,9 @@ const iRoutes = require("./routes/invoices");
 app.use("/invoices", iRoutes);
 
 const uRoutes = require('./routes/users');
+const mRoutes = require('./routes/messages');
 app.use('/users', uRoutes);
+app.use('/messages', mRoutes);
 
 // 404 handler
 app.use(function(req, res, next) {
