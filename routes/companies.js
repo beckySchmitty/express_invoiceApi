@@ -48,8 +48,8 @@ router.put('/:code', async (req, res, next) => {
     try {
         const code = req.params.code;
         const { name, description } = req.body;
-        const company = await db.query(`UPDATE companies WHERE name=$2, 
-        description=$3 WHERE code=$1 
+        const company = await db.query(`UPDATE companies 
+        SET name=$2, description=$3 WHERE code=$1 
         RETURNING code, name, description`,[code, name, description]);
         return res.json({"company": company.rows[0]})
     } catch (e) {
